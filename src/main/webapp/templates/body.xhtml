@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<body>
+	<ui:composition>
+		<table class="layout-body" width="100%" align="center">
+			<tr>
+				<td width="20%"><h:panelGroup id="leftMenuPanel">
+						<div id="leftMenuDiv">
+							<ui:insert name="leftMenu">
+								<ui:include src="/templates/leftMenu.xhtml" />
+							</ui:insert>
+						</div>
+					</h:panelGroup></td>
+				<td><h:panelGroup id="bodyPanel">
+						<div id="bodyDiv">
+							<ui:insert name="body">
+								<ui:include src="/templates/body.xhtml" />
+							</ui:insert>
+						</div>
+					</h:panelGroup></td>
+			</tr>
+		</table>
+
+	</ui:composition>
+</body>
+</html>

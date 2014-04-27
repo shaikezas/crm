@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+ 
+    <h:head>
+		<h:outputStylesheet name="crm-main.css" library="css" />
+    </h:head>
+ 
+    <h:body>
+ 
+	<div id="page">
+ 
+	    <div id="header">
+			<ui:insert name="header" >
+			  <ui:include src="/templates/header.xhtml" />
+			</ui:insert>
+			<br />
+	    </div>
+
+	    <div id="menu">
+			<ui:insert name="menu" >
+			  <ui:include src="/templates/menu.xhtml" />
+			</ui:insert>
+	    </div>
+	   <br/>
+	   <br/>
+		 
+	    <div id="content">
+			<table class="layout-body">
+				<tr>
+					<td width="10%" valign="top">
+							<h:panelGroup id="leftMenuPanel">
+							 <div id="leftMenuDiv">
+								<ui:insert name="leftMenu" >
+								  <ui:include src="/templates/leftMenu.xhtml" />
+								</ui:insert>
+							    </div>
+						</h:panelGroup>
+					</td>
+					<td valign="top">
+						<div style="width: 80%;" align="left">
+							<p:messages id="messages" autoUpdate="true" closable="true" showDetail="true" redisplay="false" showSummary="false"/>
+						</div>
+						
+						<p:socket onMessage="handleMessage" channel="/uploadMessage#{currentUser.userName}" />
+						<script type="text/javascript">
+								function handleMessage(data) {
+									alert(data);
+								}
+						</script>
+						<p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+						    <f:facet name="start">  
+						        <p:graphicImage value="/resources/images/loading.gif" />  
+						    </f:facet>  
+						  
+						    <f:facet name="complete">  
+						        <h:outputText value=""/>  
+						    </f:facet>  
+						</p:ajaxStatus>
+						<h:panelGroup id="bodyPanel">
+							<div id="bodyDiv">
+								<ui:insert name="body" >
+								  <ui:include src="/templates/body.xhtml" />
+								</ui:insert>
+							    </div>
+						</h:panelGroup>
+					</td>
+				</tr>
+			</table>
+			<br />
+			<div class="push"></div>
+	    </div>
+ 
+	    <div id="footer" class="footer" style="height: 50%">
+	    	<ui:insert name="footer" >
+	    	  <ui:include src="/templates/footer.xhtml" />
+	    	</ui:insert>
+    	</div>
+ 
+     </div>
+ 
+    </h:body>
+</html>

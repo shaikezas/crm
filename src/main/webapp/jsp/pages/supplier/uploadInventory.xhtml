@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+<h:form id="siForm" style="width: 100%" enctype="multipart/form-data">
+<!-- <p:growl id="growl" showDetail="true" sticky="true" />  -->
+		<p:panelGrid id="panel" columns="2" cellpadding="6" style="margin:0 auto;">
+			<f:facet name="header">  
+				Upload supplier inventory
+			</f:facet>
+				<p:commandButton id="downloadLink" partialSubmit="true"
+					value="Download Template" ajax="false" immediate="true"
+					onclick="PrimeFaces.monitorDownload(start, stop)"
+					icon="ui-icon-arrowthickstop-1-s" process="@this">
+					<p:fileDownload value="#{spController.template}" />
+				</p:commandButton>
+			<p:fileUpload label="Upload File" auto="false" fileUploadListener="#{spController.handleFileUpload}" id="skuUpload"
+	 				mode="advanced" multiple="false" sizeLimit="10000000" showButtons="false"
+	 				allowTypes="/(\.|\/)(xls|xlsx)$/" update=":form:siPanels:siDetailsForm, @form" oncomplete="siDetailsVar.show();" process="@form,@this"/> 
+	 		<f:facet name="footer" align="center">
+	 		<!-- <p:commandButton value="Submit" action="#{spController.showDetails()}"  ajax="false"/> -->
+	 		</f:facet>
+			                  
+		</p:panelGrid>			
+</h:form>
+
+		<h:form id="siDetailsForm">
+			<p:dialog id="siDetailsDialog" header="Supplier Inventory Details" severity="alert" closable="TRUE"
+				widgetVar="siDetailsVar"
+				width="1000"
+				height="400">
+				
+					<p:dataTable var="skuDetails" value="#{spController.siBean.siDTOs}"
+					widgetVar="siDetailsTable"
+					paginator="true"
+					rows="10"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15"
+					paginatorPosition="bottom" tableStyle="table-layout: fixed;"
+					id="skuDetails" colspan="8">
+			
+			<f:facet name="header">
+			<p:outputPanel>
+				<h:outputText value="Search all fields: " />
+				<p:inputText id="globalFilter"
+					onkeyup="PF('siDetailsTable').filter()" style="width:150px" />
+			</p:outputPanel>
+		</f:facet>
+						<p:column headerText="SKU Id" filterBy="skuId" filterStyle="display:none" sortBy="skuId" style="text-align:center;">
+							<h:outputText value="#{skuDetails.skuId}" />
+						</p:column>
+			
+						<p:column headerText="SKU Name" filterBy="skuName" sortBy="skuName" filterStyle="display:none" style="text-align:center;">
+							<h:outputText value="#{skuDetails.skuName}" />
+						</p:column>
+			
+						<p:column headerText="Quantity" filterBy="quantity" sortBy="quantity" filterStyle="display:none" style="text-align:center;">
+							<h:outputText value="#{skuDetails.quantity}" />
+						</p:column>
+						
+						<p:column headerText="Supplier Id" filterBy="supplierId" sortBy="supplierId" filterStyle="display:none" style="text-align:center;">
+							<h:outputText value="#{skuDetails.supplierId}" />
+						</p:column>
+						
+						<p:column headerText="Supplier Name" filterBy="supplierName" sortBy="supplierName" filterStyle="display:none" style="text-align:center;">
+							<h:outputText value="#{skuDetails.supplierName}" />
+						</p:column>
+						
+						<p:column headerText="Supplier Sku Name" filterBy="supplierSkuCode" sortBy="supplierSkuCode" filterStyle="display:none" style="text-align:center;">
+							<h:outputText value="#{skuDetails.supplierSkuCode}" />
+						</p:column>
+						<p:column headerText="Status" filterBy="status" sortBy="status" filterStyle="display:none" style="text-align:center;">
+							<h:outputText value="#{skuDetails.status}" />
+						</p:column>
+						
+						<p:column headerText="Remarks" filterBy="remarks" sortBy="remarks" filterStyle="display:none" style="text-align:center;">
+							<h:outputText value="#{skuDetails.remarks}" />
+						</p:column>
+						
+					<f:facet name="footer" >
+						<p:commandButton value="Close" onclick="siDetailsVar.hide();"  type="button" />
+					</f:facet>
+					</p:dataTable>
+			
+			</p:dialog>
+		</h:form>		
+		<script type="text/javascript">
+			function start() {
+				statusDialog.show();
+			}
+
+			function stop() {
+				statusDialog.hide();
+			}
+		</script>
+		
+		<h:outputScript id="siDetailsDialogScript" target="body">  
+	/* <![CDATA[ */ 
+	    function handleComplete(xhr, status, args) { 
+	           if(args.notValid || args.validationFailed )  
+	              return;
+	          	btnShow.enable(); 
+	          	siDetailsVar.show();
+	    } 
+	/* ]]> */  
+</h:outputScript>
+</h:body>
+</html>

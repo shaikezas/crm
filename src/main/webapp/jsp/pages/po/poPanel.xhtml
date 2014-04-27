@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>B2B FC PO Panel Page</title>
+	<h:outputStylesheet name="/css/crm-main.css" library="css" />
+</h:head>
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:define name="leftMenu">
+			<ui:include src="/jsp/pages/procurement/procurementLeftMenu.xhtml" />
+		</ui:define>
+		<ui:define name="body">
+			<h:form id="form">
+				<p:panel style="width: 40%;margin:0 auto;">
+					<p:panelGrid columns="2" style="width: 100%;">
+						<f:facet name="header">  
+								Supplier
+						</f:facet>
+						<h:outputText value="Select Supplier:" />
+						<p:selectOneMenu id="supplierId"
+							value="#{poController.poBean.selectedSupplier}" required="true"
+							requiredMessage="Supplier is required">
+							<f:selectItem itemLabel="Select Supplier" itemValue="" />
+							<f:selectItems value="#{poController.supplierMap.entrySet()}"
+								var="supplier" itemLabel="#{supplier.value.name}"
+								itemValue="#{supplier.key}" />
+							<p:ajax process="@this" event="change" update="supplierDetails"
+								partialSubmit="true"
+								listener="#{poController.supplierSelected()}" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+				</p:panel>
+					<h:panelGroup id="supplierDetails" style="width: 100%;margin:0 auto;align:center !important;">
+						<p:panelGrid columns="6" id="supplierInfo" style="width: 100%;"
+							rendered="#{poController.poBean.selectedSupplier ne null}">
+							<f:facet name="header">  
+									Supplier Details
+						</f:facet>
+							<h:outputLabel value="Contact Name :"
+								style="width: 5%;white-space: normal;font-weight: bold;"/>
+							<h:outputText value="#{poController.poBean.contactName}" />
+							<h:outputLabel value="Mobile No :" style="width: 5%;white-space: normal;font-weight: bold;"/>
+							<h:outputText value="#{poController.poBean.mobileNumber}" />
+							<h:outputLabel value="Address :" style="width: 5%;white-space: normal;font-weight: bold;"/>
+							<h:outputText value="#{poController.poBean.address}" />
+						</p:panelGrid>
+						<p:tabView
+							rendered="#{poController.poBean.selectedSupplier ne null}" id="poPanels">
+							<p:tab title="PO to generate">
+								<ui:include src="/jsp/pages/po/poGenerate.xhtml">
+									<ui:param name="pendingPOList" value="#{poController.poBean.pendingPOSkus}"/>
+								</ui:include>
+							</p:tab>
+							<p:tab title="Open PO">
+								<ui:include src="/jsp/pages/po/poShortClose.xhtml">
+									<ui:param name="openPOList" value="#{poController.poBean.poSkusList}"/>
+								</ui:include>
+							</p:tab>
+						</p:tabView>
+					</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+
+</h:body>
+</html>

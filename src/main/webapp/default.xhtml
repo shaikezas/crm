@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head/>
+<h:body>
+<div style="color: white">
+	<div style="margin-left:25%; align:center; width: 598px; height: 306px; background-image: url('${request.contextPath}/resources/images/logos/login.png');">
+	<br/>
+	<h3 style="margin-left: 30%;">Welcome to The CRM Login Page</h3>
+	<p style="margin-left: 30%;">You must login to visit pages in our secure area.</p>
+	<br/>
+			<span style="color:pink ;margin-left: 35%;">#{loginController.error}</span>
+			<br/><br/>
+	<h:form>
+		<table class="login" style="margin-left: 35%; width: 60%; font-size: 13px">
+			<tr>
+				<td style="">User Name :<br />
+				<br /></td>
+				<td><p:inputText id="loginName" value="#{loginController.loginBean.loginName}" maxlength="50" required="true"/><br />
+				<br /></td>
+			</tr>
+			<tr>
+				<td style="">Password :<br />
+				<br /></td>
+				<td><p:password name="password" value="#{loginController.loginBean.password}" maxlength="50" required="true"/><br />
+				<br /></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<p:commandButton value="Login" update="loginMsg" ajax="false" action="#{loginController.login}" />
+				</td>
+			</tr>
+		</table>
+
+		</h:form>
+	</div>
+	</div>
+</h:body>
+
+</html>

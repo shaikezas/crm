@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>B2B FC PO Panel Page</title>
+	<h:outputStylesheet name="/css/crm-main.css" library="css" />
+</h:head>
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">		
+		<ui:define name="body">
+					<h:form id="form">
+					<p:panelGrid columns="2" style="width: 75%;margin:0 auto;">
+						<f:facet name="header">  
+								Supplier
+						</f:facet>
+						<h:outputText value="Select Supplier:" />
+						<p:selectOneMenu  id="supplierId"
+							value="#{spController.siBean.selectedSupplier}" required="true"
+							requiredMessage="Supplier is required">
+							<f:selectItem itemLabel="Select Supplier" itemValue="" />
+							<f:selectItems value="#{spController.supplierMap.entrySet()}"
+								var="supplier" itemLabel="#{supplier.value.name}"
+								itemValue="#{supplier.key}" />
+							<p:ajax process="@this" event="change" update="supplierDetails"
+								partialSubmit="true"
+								listener="#{spController.supplierSelected()}" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+					<br/>
+					<h:panelGroup id="supplierDetails">
+						<p:panelGrid columns="2" id="supplierInfo" style="width: 75%;margin:0 auto;"
+							rendered="#{spController.siBean.selectedSupplier ne null}">
+							<f:facet name="header">  
+									Supplier Details
+						</f:facet>
+							<h:outputLabel value="Contact Name"
+								style="font-weight: bold;width:10%;"/>
+							<h:outputText value="#{spController.siBean.contactName}" style="width:60%"/>
+							<h:outputLabel value="Mobile No" style="font-weight: bold;"/>
+							<h:outputText value="#{spController.siBean.mobileNumber}"/>
+							<h:outputLabel value="Address" style="font-weight: bold;"/>
+							<h:outputText value="#{spController.siBean.address}"/>
+						</p:panelGrid>
+						<br/>
+						<p:tabView
+							rendered="#{spController.siBean.selectedSupplier ne null}" id="siPanels" style="width:75%;margin:0 auto;">
+							<p:tab title="Upload Inventory">
+							<ui:include src="/jsp/pages/supplier/uploadInventory.xhtml">
+							</ui:include>
+							</p:tab>
+							<p:tab title="Update Inventory">
+							<ui:include src="/jsp/pages/supplier/updateInventory.xhtml">
+							</ui:include>
+							</p:tab>
+						</p:tabView>
+						
+					</h:panelGroup>
+					
+				</h:form>	
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

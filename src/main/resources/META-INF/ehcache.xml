@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false" name="wms-data">
+    
+    	<diskStore path="user.dir"/>
+ 		<cache  name="courierCache"
+            eternal="false"
+            maxElementsInMemory="200"
+            overflowToDisk="false"
+            diskPersistent="false"        
+            timeToIdleSeconds="3600"
+            timeToLiveSeconds="7200"
+            memoryStoreEvictionPolicy="LRU" /> 
+</ehcache>

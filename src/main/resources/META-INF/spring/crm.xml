@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+       http://www.springframework.org/schema/cache
+ 	http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<context:property-placeholder
+		location="classpath*:META-INF/properties/${profile}/crm.properties"
+		ignore-unresolvable="true" />
+	<context:annotation-config />
+	<context:spring-configured />
+	
+	
+	<context:component-scan base-package="com.knowledgehut.crm" />
+
+  	
+<!--   	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+	    <property name="securityManager" ref="securityManager"/>
+	    <property name="loginUrl" value="/jsp/welcome.xhtml"/>
+	    <property name="successUrl" value="/jsp/dashboard.xhtml"/>
+	    <property name="unauthorizedUrl" value="/jsp/welcome.xhtml"/>
+	    <property name="filterChainDefinitions">
+	        <value>
+	            /jsp/welcome.xhtml=anon	           
+	            /jsp/**=authc, perms[B2B_page_views]
+	            /jsp/admin/**=authc, roles[b2b_admin]
+	            /jsp/** = authc, b2bAuthFilter
+	        </value>
+	    </property>
+	    	    
+	</bean>
+	
+	<bean
+		class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="view">
+					<bean class="com.hs18.crm.web.filter.ViewScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${crm.email.host}" />
+	</bean>
+	<bean id="simpleMailMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="from" value="${crm.email.from}"/>
+		<property name="subject" value="b2b-fc-supplier"/>
+	</bean>
+	Configuration for using Ehcache as the cache manager
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcache"/>
+  	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:META-INF/ehcache.xml"/> -->
+	
+</beans>

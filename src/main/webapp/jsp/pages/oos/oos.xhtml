@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>B2B FC Out of stock Skus Page</title>
+	<h:outputStylesheet name="/css/crm-main.css" library="css" />
+</h:head>
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:define name="leftMenu">
+			<ui:include src="/jsp/pages/procurement/procurementLeftMenu.xhtml" />
+		</ui:define>
+		<ui:define name="body">
+			<h:form id="oosForm">
+				<p:dataTable id="oosTable" var="skuDetail"
+					value="#{oosController.outOfStockList}" widgetVar="oosTable"
+					rowIndexVar="rowIndex" paginator="true" rows="10"
+					rowKey="#{skuDetail.skuId}"
+					selection="#{oosController.selectedSkus}"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15" paginatorPosition="bottom"
+					tableStyle="table-layout: fixed;">
+
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputLabel value="Out-of-Stock SKUs"
+								style="text-align-center;font-weight:bold;" />
+						</p:outputPanel>
+						<br />
+						<p:outputPanel>
+							<h:outputText value="Search all fields: " />
+							<p:inputText id="globalFilter" onkeyup="PF('oosTable').filter()"
+								style="width:150px" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column selectionMode="multiple"
+						style="width:10%;text-align:center;" headerText="Select" />
+
+					<p:column headerText="Sku Id" filterBy="skuId" sortBy="skuId"
+						filterStyle="display:none" style="width:10%;text-align:center;">
+						<p:commandLink value="#{skuDetail.skuId}"
+							actionListener="#{oosController.fetchSupplierInventory(skuDetail.skuId)}"
+							type="button" process="@this"
+							oncomplete="supplierInventory.show();" ajax="true"
+							update=":oosForm:supplierTab" partialSubmit="true" />
+					</p:column>
+
+					<p:column headerText="Sku Name" filterBy="skuName" sortBy="skuName"
+						filterStyle="display:none"
+						style="width:70%;white-space: normal;text-align:center;">
+						<h:outputText value="#{skuDetail.skuName}" />
+					</p:column>
+
+					<p:column headerText="Quantity"
+						style=" width:10%;white-space:normal;text-align:center;">
+						<h:outputText value="#{skuDetail.unassignedQty}" />
+					</p:column>
+
+					<f:facet name="footer">
+						<p:panel style="width: 65%;margin:0 auto;">
+							<p:panelGrid columns="4" style="width: 100%;" rendered="#{oosController.showFooter()}">
+								<h:outputLabel value="Site For Reassignment "
+									style="font-weight:bold;"/>
+								<p:selectOneMenu id="siteId"
+									value="#{oosController.reassignSite}">
+									<f:selectItems value="#{currentUser.associatedSites.entrySet()}"
+										var="site" itemLabel="#{site.value}" itemValue="#{site.key}" />
+								</p:selectOneMenu>							
+								<p:commandButton action="#{oosController.reassignSkus}"
+									value="Re-Assign" ajax="false"/>
+								<p:commandButton actionListener="#{oosController.cancelSkus}"
+									value="Cancel" ajax="true" partialSubmit="true" update=":oosForm:cancelledSuborderTab" oncomplete="cancelReportDlg.show();" process="oosTable"/>
+							</p:panelGrid>
+						</p:panel>
+					</f:facet>
+				</p:dataTable>
+				
+				<p:dialog id="cancelReportDlg" header="Cancelled Suborders"
+					widgetVar="cancelReportDlg" height="150" width="400"
+					resizable="false" showEffect="fade" hideEffect="fade">
+					<f:facet name="header">  
+						Cancelled Report
+					</f:facet>
+					<p:dataTable var="cancelledSuborder"
+						value="#{oosController.cancelledList}" paginator="false"
+						id="cancelledSuborderTab" tableStyle="table-layout: fixed;">
+				
+						<p:column headerText="Suborder Id" style="text-align:center">
+							<h:outputText value="#{cancelledSuborder.suborder}"/>
+						</p:column>
+						<p:column headerText="Sku Id" style="text-align:center">
+							<h:outputText value="#{cancelledSuborder.skuId}"/>
+						</p:column>
+						<p:column headerText="Cancelled Qty" style="text-align:center">
+							<h:outputText value="#{cancelledSuborder.cancelledQty}"/>
+						</p:column>
+						<f:facet name="footer" align="center">
+							<p:commandButton value="Close" onclick="cancelReportDlg.hide();"
+							type="button" />
+					</f:facet>
+					</p:dataTable>
+				</p:dialog>
+
+				<p:dialog id="supplierInventory" header="Supplier Inventory"
+					widgetVar="supplierInventory" height="150" width="800"
+					resizable="false" showEffect="fade" hideEffect="fade">
+					<f:facet name="header">  
+					Suppliers List
+					</f:facet>
+					<p:dataTable var="supplier"
+						value="#{oosController.supplierInventory}" paginator="false"
+						id="supplierTab" tableStyle="table-layout: fixed;">
+
+						<p:column headerText="Site Name (Id)"
+							style="text-align:center;width:25%;">
+							<h:outputText value="#{supplier.siteName} (#{supplier.siteId})" />
+						</p:column>
+						<p:column headerText="Supplier Name (Id)"
+							style="text-align:center;width:16%;">
+							<h:outputText
+								value="#{supplier.supplierName} (#{supplier.supplierId})" />
+						</p:column>
+						<p:column headerText="Contact Person"
+							style="text-align:center;width:16%;">
+							<h:outputText value="#{supplier.contactPerson}" />
+						</p:column>
+						<p:column headerText="Mobile" style="text-align:center;width:13%;">
+							<h:outputText value="#{supplier.mobile}" />
+						</p:column>
+						<p:column headerText="Procurement Cost"
+							style="text-align:center;width:18%;">
+							<h:outputText value="#{supplier.procurementCost}">
+								<f:convertNumber minFractionDigits="2" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Inventory"
+							style="text-align:center;width:12%;">
+							<h:outputText value="#{supplier.inventory}" />
+						</p:column>
+
+					</p:dataTable>
+
+					<f:facet name="footer" align="center">
+
+						<p:commandButton value="Close" onclick="supplierInventory.hide();"
+							type="button" />
+					</f:facet>
+				</p:dialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

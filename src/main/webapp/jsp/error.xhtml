@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>B2B FC Login Page</title>
+	<h:outputStylesheet name="/css/crm-main.css"
+		library="css" />
+</h:head>
+<h:body>
+
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:define name="header">
+			<ui:include src="/templates/nonAuthenticatedHeader.xhtml" />
+		</ui:define>
+
+		<ui:define name="menu">
+			<ui:include src="/templates/blank.xhtml" />
+		</ui:define>
+
+		<ui:define name="leftMenu">
+			<ui:include src="/templates/blank.xhtml" />
+		</ui:define>
+		<ui:define name="body">
+			<div style="width: 650px; height: 306px; background-image: url('${request.contextPath}/resources/images/bg-err-strip-2.gif');">
+				<div style="text-align: center;">
+					<img src="${request.contextPath}/resources/images/icon_errorpage.png" /> <span style="color: gray; font-size: 40pt; ">Oops...</span>
+				</div>
+				<br/>
+				<span style="font-size: 15pt;">Looks like the page you were looking for does not exist. Sorry about that.</span>
+				<h3 style="text-align:center; font-family: tahoma;">${error}</h3>
+				
+				<div style="text-align:center;">
+					<span style="font-size: 15pt; ">Lucky enough some other pages exist.</span><br />
+					<a href="${request.contextPath}/jsp/welcome.xhtml"><img src="${request.contextPath}/resources/images/btn_gohome.jpg"/></a>
+				</div>
+			</div>
+			
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>

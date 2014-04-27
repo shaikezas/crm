@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+		<h:form id="siUpdateForm" style="width: 100%">
+					<p:dataTable var="skuDetails" value="#{spController.siBean.skuInfos}"
+					widgetVar="siUpdateTable"
+					paginator="true"
+					rows="10"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15"
+					paginatorPosition="bottom" tableStyle="table-layout: fixed;"
+					id="skuDetails" colspan="9">
+			
+			<f:facet name="header">
+			<p:outputPanel>
+				<h:outputText value="Search all fields: " />
+				<p:inputText id="globalFilter"
+					onkeyup="PF('siUpdateTable').filter()" style="width:150px" />
+			</p:outputPanel>
+		</f:facet>
+						<p:column headerText="SKU Id" filterBy="skuId" filterStyle="display:none" sortBy="skuId" style="text-align:center;width:10%;">
+							<h:outputText value="#{skuDetails.skuId}" />
+						</p:column>
+			
+						<p:column headerText="SKU Name" filterBy="skuName" sortBy="skuName" filterStyle="display:none" style="text-align:center;width:22%;">
+							<h:outputText value="#{skuDetails.skuName}" />
+						</p:column>
+			
+						<p:column headerText="Supplier Sku Name" filterBy="supplierSkuCode" sortBy="supplierSkuCode" filterStyle="display:none" style="text-align:center;width:14%;">
+							<h:outputText value="#{skuDetails.supplierSkuCode}" />
+						</p:column>
+						
+						<p:column headerText="Base Price" filterBy="promisedPrice" sortBy="promisedPrice" filterStyle="display:none" style="text-align:center;width:10%;">
+							<h:outputText value="#{skuDetails.promisedPrice}" />
+						</p:column>
+						<p:column headerText="Tax Percentage" filterBy="taxPercentage" sortBy="taxPercentage" filterStyle="display:none" style="text-align:center;width:10%;">
+							<h:outputText value="#{skuDetails.taxPercentage}" />
+						</p:column>
+						<p:column headerText="Total Price" filterBy="totalPrice" sortBy="totalPrice" filterStyle="display:none" style="text-align:center;width:10%;">
+							<h:outputText value="#{skuDetails.totalPrice}" />
+						</p:column>
+						
+						<p:column headerText="Promised Inventory" filterBy="promisedQuantity" sortBy="promisedQuantity" filterStyle="display:none" style="text-align:center;width:8%;">
+							<h:outputText value="#{skuDetails.promisedQuantity}" />
+						</p:column>
+						
+						<p:column headerText="Booked Inventory" filterBy="allocatedQuantity" sortBy="allocatedQuantity" filterStyle="display:none" style="text-align:center;width:8%;">
+							<h:outputText value="#{skuDetails.allocatedQuantity}" />
+						</p:column>
+						<p:column headerText="Physical Inventory" filterBy="availableQuantity" sortBy="availableQuantity" filterStyle="display:none" style="text-align:center;width:8%;">
+							<h:outputText value="#{skuDetails.availableQuantity}" />
+						</p:column>
+						
+					<f:facet name="footer" >
+						<p:commandButton value="Close" onclick="siDetailsVar.hide();"  type="button" />
+					</f:facet>
+					</p:dataTable>
+			
+		</h:form>		
+</h:body>
+</html>

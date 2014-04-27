@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dataTable id="skuDetailTable" var="skuDetail" value="#{pendingPOList}"
+		widgetVar="pendingPOTable" rowIndexVar="rowIndex" paginator="true"
+		rows="10"
+		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15"
+		paginatorPosition="bottom" tableStyle="table-layout: fixed;">
+		<f:facet name="header">
+			<p:outputPanel>
+				<h:outputText value="Search all fields: " />
+				<p:inputText id="globalFilter"
+					onkeyup="PF('pendingPOTable').filter()" style="width:150px" />
+			</p:outputPanel>
+		</f:facet>
+
+		<p:column headerText="Sku Id" filterBy="skuId" sortBy="skuId" 
+			filterStyle="display:none" style="width:5%;text-align:center;">
+			<p:commandLink value="#{skuDetail.skuId}"
+				actionListener="#{poController.fetchSupplierInventory(skuDetail.skuId)}"
+				type="button" process="@this"
+				oncomplete="supplierInventoryDlg.show();" ajax="true"
+				update=":form:poPanels:supplier" partialSubmit="true" />
+		</p:column>
+
+		<p:column headerText="Sku Name" filterBy="skuName" sortBy="skuName" 
+			filterStyle="display:none" style="width:30%;white-space: normal;">
+			<h:outputText value="#{skuDetail.skuName}" />
+		</p:column>
+
+		<p:column headerText="Promised Price" filterBy="promisedPrice" sortBy="promisedPrice" 
+			filterStyle="display:none"
+			style="width:8%;white-space: normal;text-align:center;">
+			<h:outputText value="#{skuDetail.promisedPrice}" />
+		</p:column>
+
+		<p:column headerText="Tax %" filterBy="taxPercent" sortBy="taxPercent" 
+			filterStyle="display:none"
+			style="width:4%;white-space: normal;text-align:center;">
+			<h:outputText value="#{skuDetail.taxPercent}" />
+		</p:column>
+
+		<p:column headerText="Total Price" filterBy="totalPrice"  sortBy="totalPrice"
+			filterStyle="display:none"
+			style="width:7%;white-space: normal;text-align:center;">
+			<h:outputText value="#{skuDetail.totalPrice}" />
+		</p:column>
+
+		<p:column headerText="Confirmed Price" filterBy="confirmedPrice" sortBy="confirmedPrice"
+			filterStyle="display:none"
+			style="width:9%;white-space: normal;text-align:center;">
+			<h:outputText value="#{skuDetail.confirmedPrice}" />
+		</p:column>
+
+		<p:column headerText="Expected Date" filterBy="expectedDate" sortBy="expectedDate"
+			filterStyle="display:none"
+			style="width:12%;white-space: normal;text-align:center;">
+			<h:outputText value="#{skuDetail.expectedDate}">
+				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+			</h:outputText>
+		</p:column>
+
+		<p:column headerText="Assigned"
+			style="width:8%;white-space: normal;text-align:center;">
+			<p:commandLink value="#{skuDetail.assignedQty}" process="@this"
+				actionListener="#{poController.fetchRequirementsForStateChange(skuDetail,'ASSIGNED')}"
+				oncomplete="changeStateDlg.show()" type="button" ajax="true"
+				update=":form:poPanels:changeStateForm" partialSubmit="true" />
+		</p:column>
+
+		<p:column headerText="On-Hold"
+			style="width:8%;white-space: normal;text-align:center;">
+			<p:commandLink value="#{skuDetail.onHoldQty}"
+				oncomplete="changeStateDlg.show()" type="button"
+				actionListener="#{poController.fetchRequirementsForStateChange(skuDetail,'ONHOLD')}" update=":form:poPanels:changeStateForm"
+				ajax="true" partialSubmit="true" />
+		</p:column>
+
+		<p:column headerText="Confirmed"
+			style="width:9%;white-space: normal;text-align:center;">
+			<h:outputText value="#{skuDetail.confirmedQty}" />
+		</p:column>
+		
+		<f:facet name="footer">
+				<p:commandButton actionListener="#{poController.generatePO()}" value="Generate PO"  style="align:right;" rendered="#{poController.poBean.enableGeneratePO}"
+					ajax="true" partialSubmit="true" update=":form:poPanels,:form:poPanels:skuDetailTable"
+					process="@this" id="generatePO" />
+		</f:facet>
+	</p:dataTable>
+
+	<p:dialog id="changeStateDlg" header="Change State"
+		widgetVar="changeStateDlg" modal="true" height="300" width="1000"
+		resizable="false" showEffect="fade" hideEffect="fade"
+		visible="#{not empty facesContext.messageList}">
+		<h:form id="changeStateForm">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+			<p:dataTable var="requirementDtl"
+				value="#{poController.poBean.requirements}" paginator="false"
+				id="requirement" tableStyle="table-layout: fixed;">
+
+				<p:column headerText="Sku Id" style="text-align:center;widht:7%;">
+					<h:outputText value="#{requirementDtl.skuId}" />
+				</p:column>
+
+				<p:column headerText="Requirement"
+					style="text-align:center;width:12%;word-wrap: break-word;">
+					<h:outputText value="#{requirementDtl.requirementId}" />
+				</p:column>
+
+				<p:column headerText="State" style="white-space: normal;width:19%;">
+					<p:selectOneMenu value="#{requirementDtl.state}"
+						style="white-space: normal;width:95%;" id="state" filter="true"
+						filterText="Filter" layout="lineDirection"
+						filterMatchMode="startsWith">
+						<f:selectItem itemLabel="Select State" itemValue="" />
+						<f:selectItems value="#{poController.poBean.states}" />
+						<p:ajax event="change" process="@this"
+							listener="#{poController.fetchReasons(requirementDtl)}"
+							update="reason,remarks,pricePanel,datePanel" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="Reason" style="white-space: normal;width:19%;">
+					<p:selectOneMenu value="#{requirementDtl.reason}" id="reason"
+						filter="true" filterText="Filter" layout="lineDirection"
+						filterMatchMode="startsWith" required="true"
+						requiredMessage="Reason is required"
+						style="white-space: normal;width:95%;"
+						disabled="#{requirementDtl.confirmedState}">
+						<f:selectItem itemLabel="Select Reason" itemValue="" />
+						<f:selectItems value="#{poController.poBean.reasons}" />
+						<p:ajax event="change" process="@this"
+							listener="#{poController.fetchRemarks(requirementDtl)}"
+							update="remarks,pricePanel,datePanel" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="Remarks"
+					style="white-space: normal;width:21%;">
+					<p:selectOneMenu value="#{requirementDtl.remarks}"
+						disabled="#{requirementDtl.confirmedState}" id="remarks"
+						style="white-space: normal;width:95%;" layout="lineDirection"
+						filter="true" filterText="Filter" filterMatchMode="startsWith"
+						required="true" requiredMessage="Remarks is required">
+						<f:selectItem itemLabel="Select Remarks" itemValue="" />
+						<f:selectItems value="#{poController.poBean.remarks}" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="PO Price"
+					style="white-space: normal;width:10%;text-align:center;">
+					<p:outputLabel id="pricePanel">
+						<p:spinner id="poPrice" value="#{requirementDtl.confirmedPrice}"
+							min="0" stepFactor=".01" size="5" />
+					</p:outputLabel>
+				</p:column>
+
+				<p:column headerText="Expected Date"
+					style="white-space: normal;width:12%;word-wrap: break-word;text-align:center;">
+					<p:outputLabel id="datePanel">
+						<p:calendar effect="explode" id="expectedDate" required="true"
+							size="10" pattern="dd/MM/yyyy HH:mm"
+							value="#{requirementDtl.expectedDate}"
+							requiredMessage="Expected Date is required"
+							rendered="#{requirementDtl.dateMandatory}" />
+						<h:outputText value="#{requirementDtl.expectedDate}"
+							rendered="#{!requirementDtl.dateMandatory}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+						</h:outputText>
+					</p:outputLabel>
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton value="Submit"
+						action="#{poController.changeState()}"
+						process=":form:poPanels:changeStateForm" update=":form:poPanels"
+						oncomplete="changeStateDlg.hide();" />
+					<p:commandButton value="Cancel" onclick="changeStateDlg.hide();"
+						type="button" />
+				</f:facet>
+			</p:dataTable>
+
+
+		</h:form>
+	</p:dialog>
+
+	<p:dialog id="supplierInventoryDlg" header="Supplier Inventory"
+		widgetVar="supplierInventoryDlg" height="150" width="800"
+		resizable="false" showEffect="fade" hideEffect="fade">
+		<f:facet name="header">  
+					Suppliers List
+		</f:facet>
+		<p:dataTable var="supplier" value="#{poController.supplierInventory}"
+			paginator="false" id="supplier" tableStyle="table-layout: fixed;">
+
+			<p:column headerText="Site Name (Id)"
+				style="text-align:center;width:25%;">
+				<h:outputText value="#{supplier.siteName} (#{supplier.siteId})" />
+			</p:column>
+			<p:column headerText="Supplier Name (Id)"
+				style="text-align:center;width:16%;">
+				<h:outputText
+					value="#{supplier.supplierName} (#{supplier.supplierId})" />
+			</p:column>
+			<p:column headerText="Contact Person"
+				style="text-align:center;width:16%;">
+				<h:outputText value="#{supplier.contactPerson}" />
+			</p:column>
+			<p:column headerText="Mobile" style="text-align:center;width:13%;">
+				<h:outputText value="#{supplier.mobile}" />
+			</p:column>
+			<p:column headerText="Procurement Cost"
+				style="text-align:center;width:18%;">
+				<h:outputText value="#{supplier.procurementCost}">
+					<f:convertNumber minFractionDigits="2" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Inventory" style="text-align:center;width:12%;">
+				<h:outputText value="#{supplier.inventory}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<f:facet name="footer" align="center">
+			<p:commandButton value="Close" onclick="supplierInventoryDlg.hide();"
+				type="button" />
+		</f:facet>
+	</p:dialog>
+
+
+
+	<h:outputScript target="body" id="changeStateDlgScript">  
+	/* <![CDATA[ */ 
+	    function handleComplete(xhr, status, args) { 
+	           if(args.notValid || args.validationFailed)  
+	              return;
+	           window.opener.location.reload(true);  
+	           changeStateDlg.hide();
+	    } 
+	/* ]]> */  
+	</h:outputScript>
+
+</h:body>
+</html>
