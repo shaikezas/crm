@@ -18,9 +18,26 @@
 		ignore-unresolvable="true" />
 	<context:annotation-config />
 	<context:spring-configured />
-	
-	
+	<import resource="classpath*:META-INF/spring/crm-shiro.xml" />
 	<context:component-scan base-package="com.knowledgehut.crm" />
+	<bean
+		class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="view">
+					<bean class="om.knowledgehut.crm.filter.ViewScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- Configuration for using Ehcache as the cache manager-->
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcache"/>
+  	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache.xml"/>
+  			
+	
+	
+	
 
   	
 <!--   	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">

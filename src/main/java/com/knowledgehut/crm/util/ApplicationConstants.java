@@ -32,10 +32,10 @@ public class ApplicationConstants {
 	public static final String USERNAME_KEY="username";
 	
 	// ROLES
-		public static final String ADMIN_ROLE_NAME = "b2b_admin";
-		public static final String SUPPLIER_ROLE_NAME = "b2b_supplier";
-		public static final String EXECUTIVE_ROLE_NAME = "b2b_executive";
-		public static final String SUPER_USER_ROLE_NAME = "b2b_super_user";
+		public static final String ADMIN_ROLE_NAME = "crm_admin";
+		public static final String MANAGER_ROLE_NAME = "crm_manager";
+		public static final String EXECUTIVE_ROLE_NAME = "crm_executive";
+		public static final String SUPER_USER_ROLE_NAME = "crm_super_user";
 		
 		 public enum FileType {
        SI("Supplier Inventory");

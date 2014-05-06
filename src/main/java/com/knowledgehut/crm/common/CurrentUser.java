@@ -1,6 +1,7 @@
 package com.knowledgehut.crm.common;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.context.annotation.Scope;
@@ -18,6 +19,7 @@ public class CurrentUser implements Serializable {
 	private String userName;
 	private Long userId;	
 	private String email;
+	private Date loginTime;
 
 	public String getUserName() {
 		return userName;
@@ -42,6 +44,14 @@ public class CurrentUser implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+  public Date getLoginTime() {
+    return loginTime;
+  }
+
+  public void setLoginTime(Date loginTime) {
+    this.loginTime = loginTime;
+  }
 
 
 	

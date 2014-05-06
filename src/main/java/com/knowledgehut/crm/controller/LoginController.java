@@ -3,10 +3,10 @@ package com.knowledgehut.crm.controller;
 import java.io.Serializable;
 
 import javax.faces.context.FacesContext;
-import javax.security.auth.Subject;
 import javax.servlet.http.HttpSession;
 
-import org.primefaces.util.SecurityUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,8 @@ import com.knowledgehut.crm.exception.UnauthorizedRoleException;
 import com.knowledgehut.crm.i18.MessageBundle;
 import com.knowledgehut.crm.service.LoginService;
 import com.knowledgehut.crm.util.ApplicationConstants;
+import com.knowledgehut.crm.util.JdbcAuthRealm;
+import com.knowledgehut.crm.util.SpringUtils;
 
 @Component
 @Scope(value = "view", proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -38,8 +40,12 @@ public class LoginController extends BaseController {
 	private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	private void clearSubject() {
-	/*	Subject subject = SecurityUtils.getSubject();		
-		subject.logout();*/
+		Subject subject = SecurityUtils.getSubject();
+		JdbcAuthRealm jdbcAuthRealm = (JdbcAuthRealm) SpringUtils.getBean("jdbcAuthRealm");
+		if(jdbcAuthRealm != null) {
+			jdbcAuthRealm.clear(subject.getPrincipals());			
+		}
+		subject.logout();
 	}
 	
 	public String login() {
@@ -51,7 +57,7 @@ public class LoginController extends BaseController {
 			}
 			Subject currentUser = loginService.login(loginBean.getLoginName(), loginBean.getPassword());
 			
-			/*if (currentUser.isAuthenticated()) {
+			if (currentUser.isAuthenticated()) {
 				session.setAttribute(ApplicationConstants.USERNAME_KEY, loginBean.getLoginName());
 				return redirect(ApplicationConstants.USER_LOGIN_SUCCESSFUL_PAGE_URI);
 			}
@@ -59,7 +65,7 @@ public class LoginController extends BaseController {
 				setError(MessageBundle.getInstance().getString(ApplicationConstants.USER_LOGIN_ERROR));
 				return null;
 			}
-			*/
+			
 		} catch(UnauthorizedRoleException e) {
 			logger.error("Exception occurred while logging into the application. Message: {}", e);
 			setError(e.getMessage());
