@@ -9,3 +9,10 @@ insert into `ROLES` (`ID`, `ROLE_NAME`, `ROLE_DESC`, `IS_ACTIVE`, `DELETED`, `CR
 insert into `user_roles` (`USER_ID`, `ROLE_ID`, `IS_ACTIVE`, `DELETED`, `CREATEDBY`, `MODIFIEDBY`, `CREATED_DATE`, `MODIFIED_DATE`) values('1','1','1','0','0','0','2014-05-10 12:08:41','0000-00-00 00:00:00');
 
 
+
+insert into `LEAD_TYPE` (`ID`, `LEAD_TYPE`, `DESCRIPTION`, `GROUP_ID`, `ACTIVE`, `CREATEDBY`, `MODIFIED_BY`, `CREATED_DATE`, `MODIFIED_DATE`) values('1','Product Related','Product Related',NULL,'1','0','0',NOW(),NOW());
+insert into `LEAD_TYPE` (`ID`, `LEAD_TYPE`, `DESCRIPTION`, `GROUP_ID`, `ACTIVE`, `CREATEDBY`, `MODIFIED_BY`, `CREATED_DATE`, `MODIFIED_DATE`) values('2','Invoice Related','Invoice Related',NULL,'1','0','0',NOW(),NOW());
+insert into `LEAD_TYPE` (`ID`, `LEAD_TYPE`, `DESCRIPTION`, `GROUP_ID`, `ACTIVE`, `CREATEDBY`, `MODIFIED_BY`, `CREATED_DATE`, `MODIFIED_DATE`) values('3','Payment Related','Payment Related',NULL,'1','0','0',NOW(),NOW());
+insert into `LEAD_TYPE` (`ID`, `LEAD_TYPE`, `DESCRIPTION`, `GROUP_ID`, `ACTIVE`, `CREATEDBY`, `MODIFIED_BY`, `CREATED_DATE`, `MODIFIED_DATE`) values('4','Workshop Schedule','Workshop Schedule','1','1','0','0',NOW(),NOW());
+insert into `LEAD_TYPE` (`ID`, `LEAD_TYPE`, `DESCRIPTION`, `GROUP_ID`, `ACTIVE`, `CREATEDBY`, `MODIFIED_BY`, `CREATED_DATE`, `MODIFIED_DATE`) values('5','Enquired About Payment','Enquiried About Payment','1','1','0','0',NOW(),NOW());
+insert into `LEAD_TYPE` (`ID`, `LEAD_TYPE`, `DESCRIPTION`, `GROUP_ID`, `ACTIVE`, `CREATEDBY`, `MODIFIED_BY`, `CREATED_DATE`, `MODIFIED_DATE`) values('6','Enquired About Features','Enquiried About Features','1','1','0','0',NOW(),NOW());

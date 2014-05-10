@@ -7,10 +7,10 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name = "CASE_TRANSITION")
-public class CaseTransition extends AuditableIdEntity {
+@Table(name = "LEAD_TRANSITION")
+public class LeadTransition extends AuditableIdEntity {
 
-    @Column(name = "CASE_ID")
+    @Column(name = "LEAD_ID")
     private Long caseId;
 
     @Column(name = "FSTATE")
@@ -21,6 +21,13 @@ public class CaseTransition extends AuditableIdEntity {
 
     @Column(name = "REMARKS")
     private String remarks;
+    
+    @Column(name = "EXTERNAL_COMMUNICATION")
+    private String externalCommunication;
+    
+    @Column(name = "INTERNAL_COMMUNICATION")
+    private String internalCommunication;
+    
 
 	public Long getCaseId() {
 		return caseId;
@@ -53,4 +60,22 @@ public class CaseTransition extends AuditableIdEntity {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
+  public String getExternalCommunication() {
+    return externalCommunication;
+  }
+
+  public void setExternalCommunication(String externalCommunication) {
+    this.externalCommunication = externalCommunication;
+  }
+
+  public String getInternalCommunication() {
+    return internalCommunication;
+  }
+
+  public void setInternalCommunication(String internalCommunication) {
+    this.internalCommunication = internalCommunication;
+  }
+	
+	
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>CRM Support</title>
+	<h:outputStylesheet name="/css/crm-main.css" library="css" />
+</h:head>
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">		
+		<ui:define name="body">
+			<h:form id="supportForm">
+					<h:panelGroup id="supportPanel" style="width: 100%;margin:0 auto;align:center !important;">
+						<p:tabView  id="supportPanels"> 
+							<p:tab title="Create Lead">
+								<ui:include src="/jsp/pages/casepanel/leadPanel.xhtml">
+								</ui:include>
+							</p:tab>
+							<p:tab title="Create Case">
+								<ui:include src="/jsp/pages/casepanel/casePanel.xhtml">
+								</ui:include>
+							</p:tab>
+						</p:tabView>
+					</h:panelGroup>
+			</h:form>	
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

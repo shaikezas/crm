@@ -7,20 +7,17 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name = "CASE")
-public class Case extends AuditableIdEntity {
+@Table(name = "LEAD")
+public class Lead extends AuditableIdEntity {
 
-    @Column(name = "CASE_TYPE")
-    private String caseType;
+    @Column(name = "LEAD_TYPE")
+    private Long leadType;
 
     @Column(name = "DESCRIPTION")
     private String description;
 
     @Column(name = "STATUS")
     private Integer status;
-
-    @Column(name = "CATEGORY")
-    private Integer category;
 
     @Column(name = "ACTIVE")
     @Type(type = "yes_no")
@@ -44,17 +41,6 @@ public class Case extends AuditableIdEntity {
     @Column(name = "CONTACT")
     private String contact;
 
-    @Column(name = "MESSAGE")
-    private String message;
-
-
-	public String getCaseType() {
-		return caseType;
-	}
-
-	public void setCaseType(String caseType) {
-		this.caseType = caseType;
-	}
 
 	public String getDescription() {
 		return description;
@@ -72,13 +58,6 @@ public class Case extends AuditableIdEntity {
 		this.status = status;
 	}
 
-	public Integer getCategory() {
-		return category;
-	}
-
-	public void setCategory(Integer category) {
-		this.category = category;
-	}
 
 	public boolean isActive() {
 		return active;
@@ -136,13 +115,14 @@ public class Case extends AuditableIdEntity {
 		this.contact = contact;
 	}
 
-	public String getMessage() {
-		return message;
-	}
+  public Long getLeadType() {
+    return leadType;
+  }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+  public void setLeadType(Long leadType) {
+    this.leadType = leadType;
+  }
+
 
 
 }
