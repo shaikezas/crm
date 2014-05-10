@@ -7,11 +7,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name = "USER")
-public class UserEntity extends AuditableIdEntity {
-
-    @Column(name = "USERNAME")
-    private String loginName;
+@Table(name = "CUSTOMER")
+public class Customer extends AuditableIdEntity {
 
     @Column(name = "PASSWORD")
     private String password;
@@ -36,18 +33,7 @@ public class UserEntity extends AuditableIdEntity {
     @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "MANAGER")
-    private Integer manager;
     
-
-  	public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -106,12 +92,5 @@ public class UserEntity extends AuditableIdEntity {
         this.email = email;
     }
 
-	public Integer getManager() {
-		return manager;
-	}
-
-	public void setManager(Integer manager) {
-		this.manager = manager;
-	}
 
 }
