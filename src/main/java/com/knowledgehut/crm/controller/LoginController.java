@@ -15,11 +15,11 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import com.knowledgehut.crm.auth.JdbcAuthRealm;
 import com.knowledgehut.crm.exception.UnauthorizedRoleException;
 import com.knowledgehut.crm.i18.MessageBundle;
 import com.knowledgehut.crm.service.LoginService;
 import com.knowledgehut.crm.util.ApplicationConstants;
-import com.knowledgehut.crm.util.JdbcAuthRealm;
 import com.knowledgehut.crm.util.SpringUtils;
 
 @Component

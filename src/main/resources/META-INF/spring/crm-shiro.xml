@@ -37,7 +37,7 @@
 
     <bean id="jdbcAuthRealm" class="com.knowledgehut.crm.auth.JdbcAuthRealm">
         <property name="authenticationQuery" value="select PASSWORD from USER where USERNAME = ?"/>
-        <property name="userRolesQuery" value="select ROLE_NAME from ROLES roles,USER_ROLES ur,USER user where user.USERNAME=? and user.ID=ur.ID and roles.ID = ur.ID"/>
+        <property name="userRolesQuery" value="select ROLE_NAME from ROLES roles,USER_ROLES ur,USER user where user.USERNAME=? and user.ID=ur.USER_ID and roles.ID = ur.ROLE_ID"/>
         <property name="permissionsQuery" value="select OCMCOMMAND from ROLES roles,ROLES_PERMISSIONS rp,PERMISSIONS per where ROLE_NAME=? and roles.ID=rp.ROLE_ID and rp.PERMISSION_ID=per.ID"/>
         <property name="permissionsLookupEnabled" value="false"/>
         <property name="dataSource" ref="crmDataSource"/>

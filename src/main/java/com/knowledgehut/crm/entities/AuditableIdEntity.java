@@ -17,10 +17,10 @@ public abstract class AuditableIdEntity extends IdEntity {
 	@Column(name = "MODIFIEDBY", length = 20)
   private Long modifiedBy;
 
-	@Column(name = "CREATEDATE", nullable = false)
+	@Column(name = "CREATED_DATE", nullable = false)
 	private Date createdDate = new Date();
 
-	@Column(name = "MODIDATE", nullable = false)
+	@Column(name = "MODIFIED_DATE", nullable = false)
 	private Date modifiedDate = new Date();
 
 	@PreUpdate
