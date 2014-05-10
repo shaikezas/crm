@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+          http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="crmDataPropertiesConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+        <property name="locations">
+            <list>
+                <value>classpath*:META-INF/properties/${profile}/crm-data.properties</value>
+            </list>
+        </property>
+        <property name="systemPropertiesModeName">
+            <value>SYSTEM_PROPERTIES_MODE_OVERRIDE</value>
+        </property>
+        <property name="placeholderPrefix" value="$CRM_DATA{" />
+    </bean>
+ 	
+    <context:annotation-config />
+    <context:spring-configured/>
+    <context:component-scan base-package="com.knowledgehut.crm" />
+    
+    <jpa:repositories base-package="com.knowledgehut.crm.repositories"
+                      entity-manager-factory-ref="crmDataEntityManagerFactory"
+                      transaction-manager-ref="crmDataTransactionManager" >
+    </jpa:repositories>
+
+    <tx:annotation-driven transaction-manager="crmDataTransactionManager" mode="aspectj" order="100"/>
+
+    <bean id="crmDataTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" p:entityManagerFactory-ref="crmDataEntityManagerFactory" />
+
+    <bean id="crmDataEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" p:dataSource-ref="crmDataSource">
+
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+
+        <property name="persistenceUnitName" value="crm-persistence-unit" />
+        <property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml" />
+
+
+        <property name="jpaProperties">
+            <props>
+                <!-- <prop key="hibernate.ejb.naming_strategy">$CRM_DATA{hibernate.naming_strategy}</prop> <prop key="hibernate.naming_strategy">$CRM_DATA{hibernate.naming_strategy}</prop> -->
+                <prop key="hibernate.dialect">$CRM_DATA{hibernate.dialect}</prop>
+                <prop key="hibernate.generate_statistics">$CRM_DATA{hibernate.generate_statistics}</prop>
+                <prop key="hibernate.cache.use_structured_entries">$CRM_DATA{hibernate.cache.use_structured_entries}</prop>
+                <prop key="hibernate.show_sql">$CRM_DATA{hibernate.show_sql}</prop>
+                <!-- <prop key="hibernate.show_sql">true</prop> -->
+                <prop key="hibernate.format_sql">$CRM_DATA{hibernate.format_sql}</prop>
+                <!-- <prop key="hibernate.hbm2ddl.auto">$CRM_DATA{hibernate.hbm2ddl.auto}</prop> -->
+                <prop key="hibernate.cache.use_second_level_cache">$CRM_DATA{hibernate.cache.use_second_level_cache}</prop>
+                <prop key="hibernate.cache.use_query_cache">$CRM_DATA{hibernate.cache.use_query_cache}</prop>
+                <prop key="hibernate.cache.provider_class">$CRM_DATA{hibernate.cache.provider_class}</prop>
+                <prop key="hibernate.cache.region.factory_class">$CRM_DATA{hibernate.cache.region.factory_class}</prop>
+                <prop key="hibernate.cache.region_prefix">$CRM_DATA{hibernate.cache.region_prefix}</prop>
+                <prop key="hibernate.cache.provider_configuration_file_resource_path">
+                    $CRM_DATA{hibernate.cache.provider_configuration_file_resource_path}
+                </prop>
+                <prop key="hibernate.connection.zeroDateTimeBehavior">$CRM_DATA{hibernate.connection.zeroDateTimeBehavior}</prop>
+                <prop key="hibernate.jdbc.batch_size">$CRM_DATA{hibernate.jdbc.batch_size}</prop>
+                <prop key="hibernate.connection.username">$CRM_DATA{hibernate.connection.username}</prop>
+                <prop key="hibernate.connection.password">$CRM_DATA{hibernate.connection.password}</prop>
+                <prop key="hibernate.connection.isolation">2</prop> <!-- READ_COMMITED -->
+            </props>
+        </property>
+    </bean>
+
+    <bean id="crmDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="crmDataSourceJndi" />
+        <property name="defaultObject" ref="crmPooledDataSource" />
+    </bean>
+
+    <bean id="crmPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="$CRM_DATA{hibernate.connection.driver_class}" />
+        <property name="jdbcUrl" value="$CRM_DATA{hibernate.connection.url}" />
+        <property name="user" value="$CRM_DATA{hibernate.connection.username}" />
+        <property name="password" value="$CRM_DATA{hibernate.connection.password}" />
+
+        <property name="initialPoolSize" value="$CRM_DATA{hibernate.initialPoolSize}" />
+        <property name="minPoolSize" value="$CRM_DATA{hibernate.minPoolSize}" />
+        <property name="maxPoolSize" value="$CRM_DATA{hibernate.maxPoolSize}" />
+        <property name="maxIdleTime" value="$CRM_DATA{hibernate.maxIdleTime}" />
+        <property name="acquireIncrement" value="$CRM_DATA{hibernate.acquireIncrement}" />
+        <property name="maxStatements" value="$CRM_DATA{hibernate.maxStatements}" /><!-- Recovery from DB out age -->
+        <property name="acquireRetryAttempts" value="$CRM_DATA{hibernate.acquireRetryAttempts}" />
+        <property name="acquireRetryDelay" value="$CRM_DATA{hibernate.acquireRetryDelay}" /><!-- Required. http://www.mchange.com/projects/c3p0/#idleConnectionTestPeriod -->
+        <property name="idleConnectionTestPeriod" value="$CRM_DATA{hibernate.idleConnectionTestPeriod}" /><!-- c3p0 will test all idle, 
+			pooled but unchecked-out connections, every this number of seconds. -->
+        <property name="testConnectionOnCheckin" value="true" /><!-- Test the connection when it is returned back to the pool. -->
+        <property name="preferredTestQuery" value="select 1" />
+    </bean>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+</beans>

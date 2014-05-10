@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  */
 public class MessageBundle extends ResourceBundle {
 
-	protected static final String BUNDLE_NAME = "com.knowledgehut.crmcrm.i18n.application";
+	protected static final String BUNDLE_NAME = "com.knowledgehut.crm.i18n.application";
     private static MessageBundle _instance;
 	
 	private MessageBundle() {

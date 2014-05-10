@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.knowledgehut.crm.entities.UserEntity;
 
-@Repository(value = "userRepository")
+@Repository
 @Scope("singleton")
 public interface UserRepository extends JpaRepository<UserEntity, Long>, JpaSpecificationExecutor<UserEntity> {
 
