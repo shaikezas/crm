@@ -10,8 +10,8 @@
 	<ui:composition>
 		<table width="100%" style="border-width: 0px; background-image: url('${request.contextPath}/resources/images/logos/HomeShop18_tile.png')">
 		  <tr>
-		    <td class="logo-column" valign="top" height="50"><img src="${request.contextPath}/resources/images/logos/hs18-logo.png" border="0" height="50"/></td>
-		    <td style="width: 30%; text-align:right; padding-right:10px;" valign="bottom" >Welcome <b>User</b>!</td>
+		    <td class="logo-column" valign="top" height="50"><img src="${request.contextPath}/resources/images/logos/kh_logo.png" border="0" height="50"/></td>
+		    <td style="width: 30%; text-align:right; padding-right:10px;" valign="bottom" >Welcome <b>${username}</b>!</td>
 			<td style="width: 8%" valign="bottom"><a href="${request.contextPath}/jsp/dashboard.xhtml">Home</a></td>
 			<td style="width: 5%" valign="bottom"><h:form><h:commandLink value="Logout" action="#{loginController.logout}" /></h:form></td>
 		</tr>
