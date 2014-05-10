@@ -9,23 +9,17 @@
 	<ui:composition>
 		<div id="roundbar-blue">
 			<ul>
-				<!-- <shiro:authenticated>
-					<shiro:hasRole name="b2b_admin">
+				<shiro:authenticated>
+					<shiro:hasRole name="crm_admin">
 						<li><a href="${request.contextPath}/jsp/pages/admin/admin.xhtml">Admin</a></li>	
-						<li><a href="${request.contextPath}/jsp/pages/procurement/procurementPanel.xhtml">Procurement Panel</a></li>
-						<li><a href="${request.contextPath}/jsp/pages/supplier/supplierPanel.xhtml">Supplier Panel</a></li>				
 					</shiro:hasRole>
-					<shiro:hasRole name="b2b_executive">						
-						<li><a href="${request.contextPath}/jsp/pages/procurement/procurementPanel.xhtml">Procurement Panel</a></li>
+					<shiro:hasRole name="crm_executive">						
+						<li><a href="${request.contextPath}/jsp/pages/casepanel/searchPanel.xhtml">Search</a></li>
+						<li><a href="${request.contextPath}/jsp/pages/casepanel/myTicketsPanel.xhtml">My Tickets</a></li>
+						<li><a href="${request.contextPath}/jsp/pages/casepanel/followUpPanel.xhtml">Follow Up</a></li>
+						<li><a href="${request.contextPath}/jsp/pages/casepanel/unAssignedPanel.xhtml">Un Assigned</a></li>
 					</shiro:hasRole>
-					<shiro:hasRole name="b2b_supplier">	
-						<li><a href="${request.contextPath}/jsp/pages/supplier/supplierPanel.xhtml">Supplier Panel</a></li>
-					</shiro:hasRole>
-					<shiro:hasRole name="b2b_super_user">
-						<li><a href="${request.contextPath}/jsp/pages/procurement/procurementPanel.xhtml">Procurement Panel</a></li>
-						<li><a href="${request.contextPath}/jsp/pages/supplier/supplierPanel.xhtml">Supplier Panel</a></li>				
-					</shiro:hasRole>	
-				</shiro:authenticated>	 -->
+				</shiro:authenticated>	
 			</ul>
 		</div>
 	</ui:composition>

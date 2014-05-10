@@ -57,7 +57,8 @@ public class AuthenticationFilter implements Filter {
           !isAllowedForAll(requestURI)) {
         //check for permissions here.
         String pageName = requestURI.substring(requestURI.lastIndexOf('/') + 1, requestURI.indexOf('.'));
-        try {
+        //TODO page level permission.
+        /*try {
           loggedInUser.checkPermission(pageName);
         }catch(AuthorizationException e) {
           log.error("User: {} doesn't have permission to view page: " + pageName, loggedInUser.getPrincipal(), e);
@@ -66,7 +67,7 @@ public class AuthenticationFilter implements Filter {
               RequestDispatcher dispatcher = request.getRequestDispatcher(ApplicationConstants.USER_ERROR_PAGE_URI);
               dispatcher.forward(request, response);
           return;
-        }
+        }*/
       }
       filterchain.doFilter(request, response);
   }
