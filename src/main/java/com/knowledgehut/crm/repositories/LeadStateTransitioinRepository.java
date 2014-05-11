@@ -12,19 +12,17 @@ import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.knowledgehut.crm.entities.LeadType;
+import com.knowledgehut.crm.entities.LeadStateTransition;
 
 @Repository
 @Scope("singleton")
-public interface LeadTypeRepository extends JpaRepository<LeadType, Long>, JpaSpecificationExecutor<LeadType> {
+public interface LeadStateTransitioinRepository extends JpaRepository<LeadStateTransition, Long>, JpaSpecificationExecutor<LeadStateTransition> {
 
+  @Query(value = "FROM LeadStateTransition t where t.isDeleted=false")
+  @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value ="true")})
+  public List<LeadStateTransition> findAllReqStateTransitions();
 
-  @Query(value = "select lt from LeadType lt where lt.groupId is null")
+  @Query(value = "FROM LeadStateTransition WHERE toState.id = :toState")
   @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value ="true")})
-  public List<LeadType> findLeadGroup();
-  
-  @Query(value = "select lt from LeadType lt where lt.groupId=:groupId")
-  @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value ="true")})
-  public List<LeadType> findLeadTypeByGroup(@Param("groupId")Long groupId);
-  
+  public List<LeadStateTransition> findAllLeadStateTransitionsForGivenToState(@Param("toState") Long toState);
 }

@@ -17,7 +17,7 @@ public class Lead extends AuditableIdEntity {
     private String description;
 
     @Column(name = "STATUS")
-    private Integer status;
+    private Long status;
 
     @Column(name = "ACTIVE")
     @Type(type = "yes_no")
@@ -50,11 +50,11 @@ public class Lead extends AuditableIdEntity {
 		this.description = description;
 	}
 
-	public Integer getStatus() {
+	public Long getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(Long status) {
 		this.status = status;
 	}
 

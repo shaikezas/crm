@@ -11,6 +11,10 @@
 
 		<class>com.knowledgehut.crm.entities.UserEntity</class>
 		<class>com.knowledgehut.crm.entities.LeadType</class>
+		<class>com.knowledgehut.crm.entities.Lead</class>
+		<class>com.knowledgehut.crm.entities.LeadTransition</class>
+		<class>com.knowledgehut.crm.entities.LeadState</class>
+		<class>com.knowledgehut.crm.entities.LeadStateTransition</class>
 		<!-- Jboss recognizes only the entities listed here -->
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 

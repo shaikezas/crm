@@ -11,13 +11,13 @@ import org.hibernate.annotations.Type;
 public class LeadTransition extends AuditableIdEntity {
 
     @Column(name = "LEAD_ID")
-    private Long caseId;
+    private Long leadId;
 
     @Column(name = "FSTATE")
-    private Integer fromState;
+    private Long fromState;
 
     @Column(name = "TSTATE")
-    private Integer toState;
+    private Long toState;
 
     @Column(name = "REMARKS")
     private String remarks;
@@ -29,27 +29,28 @@ public class LeadTransition extends AuditableIdEntity {
     private String internalCommunication;
     
 
-	public Long getCaseId() {
-		return caseId;
-	}
 
-	public void setCaseId(Long caseId) {
-		this.caseId = caseId;
-	}
+	public Long getLeadId() {
+      return leadId;
+    }
 
-	public Integer getFromState() {
+    public void setLeadId(Long leadId) {
+      this.leadId = leadId;
+    }
+
+  public Long getFromState() {
 		return fromState;
 	}
 
-	public void setFromState(Integer fromState) {
+	public void setFromState(Long fromState) {
 		this.fromState = fromState;
 	}
 
-	public Integer getToState() {
+	public Long getToState() {
 		return toState;
 	}
 
-	public void setToState(Integer toState) {
+	public void setToState(Long toState) {
 		this.toState = toState;
 	}
 
