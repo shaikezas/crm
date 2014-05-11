@@ -9,7 +9,79 @@
 	<h:outputStylesheet name="/css/crm-main.css" library="css" />
 </h:head>
 <h:body>
-			<p align="center">Welcome to Lead Panel</p>			
+			<h:form id="leadForm">
+				<p:panel style="width: 50%;margin:0 auto;">
+					<p:watermark value="Firstname..." for="firstName" />
+					<p:watermark value="Lastname..." for="lastName" />
+					<p:watermark for="email" value="Email..." />
+					<p:watermark value="Description..." for="description" />
+					<p:watermark value="Contact..." for="contactNo" />
+					<p:panelGrid columns="2">
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputLabel value="Lead Details Form"
+									style="text-align-center;font-weight:bold;" />
+							</p:outputPanel>
+						</f:facet>
+
+						<h:outputLabel value="First Name" />
+						<p:inputText value="#{leadController.leadBean.firstName}"
+							required="true" requiredMessage="First Name is required"
+							id="firstName" />
+
+						<h:outputLabel value="Last Name" />
+						<p:inputText value="#{leadController.leadBean.lastName}"
+							required="true" requiredMessage="Last Name is required"
+							id="lastName" rendered="true" name="lastName" />
+							
+					<h:outputLabel value="Contact Number" />
+						<p:inputText value="#{leadController.leadBean.contact}"
+							required="true" requiredMessage="Contact Number is required"
+							id="contactNo" rendered="true" name="contactNo" />
+
+						<h:outputLabel value="Email" />
+						<p:inputText id="email" required="true" label="email" size="40"
+							requiredMessage="Email is required"
+							validatorMessage="Invalid email format"
+							value="#{leadController.leadBean.email}">
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</p:inputText>
+						<h:outputLabel value="Description" />
+						<p:inputText value="#{leadController.leadBean.description}"
+							required="true" requiredMessage="Description is required"
+							id="description" rendered="true" name="description" />
+
+						<h:outputLabel value="Lead Group" />
+						<p:selectOneMenu id="leadGroupId"
+							value="#{leadController.leadBean.leadGroupId}" required="true"
+							requiredMessage="Lead Group is required">
+							<f:selectItems
+								value="#{leadController.getLeadGroupList()}"
+								var="leadGrp" itemLabel="#{leadGrp.description}"
+								itemValue="#{leadGrp.id}" />
+								<p:ajax process="leadGroupId" update="leadTypeId" event="change"/>
+						</p:selectOneMenu>
+						
+						<h:outputLabel value="Lead Type" />
+						<p:selectOneMenu id="leadTypeId"
+							value="#{leadController.leadBean.leadTypeId}" required="true"
+							requiredMessage="Lead Type is required">
+							<f:selectItems
+								value="#{leadController.getLeadTypeList()}"
+								var="leadType" itemLabel="#{leadType.description}"
+								itemValue="#{leadType.id}" />
+						</p:selectOneMenu>
+						<f:facet name="footer">
+								<p:outputPanel style="margin:0 auto;width:30%;">
+									<p:commandButton value="Create Lead" ajax="false"
+										action="#{leadController.addLead()}" />
+								</p:outputPanel>
+					</f:facet>				
+					</p:panelGrid>					
+					</p:panel>				
+			</h:form>
 </h:body>
 </html>
+
 

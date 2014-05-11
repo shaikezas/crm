@@ -10,6 +10,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
 		<class>com.knowledgehut.crm.entities.UserEntity</class>
+		<class>com.knowledgehut.crm.entities.LeadType</class>
 		<!-- Jboss recognizes only the entities listed here -->
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 

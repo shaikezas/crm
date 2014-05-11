@@ -1,4 +1,4 @@
-package com.knowledgehut.crm.model;
+package com.knowledgehut.crm.web.bean;
 
 import java.io.Serializable;
 
