@@ -65,6 +65,9 @@ public class LeadController extends BaseController {
 	
 	public List<LeadType> getLeadTypeList() {
 	  logger.info("Getting leadtype list for group id :"+leadBean.getLeadGroupId());
+	  if(leadBean.getLeadGroupId()==null){
+	    leadBean.setLeadGroupId(leadGroupList.get(0).getId());
+	  }
     leadGroupList = leadService.getLeadTypeList(leadBean.getLeadGroupId());
     return leadGroupList;
   }
