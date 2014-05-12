@@ -19,7 +19,7 @@ public class Customer extends AuditableIdEntity {
     @Column(name = "LASTNAME")
     private String lastName;
 
-    @Column(name = "IS_ACTIVE")
+    @Column(name = "ACTIVE")
     @Type(type = "yes_no")
     private boolean active;
 

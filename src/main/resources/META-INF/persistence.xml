@@ -15,6 +15,8 @@
 		<class>com.knowledgehut.crm.entities.LeadTransition</class>
 		<class>com.knowledgehut.crm.entities.LeadState</class>
 		<class>com.knowledgehut.crm.entities.LeadStateTransition</class>
+		<class>com.knowledgehut.crm.entities.Course</class>
+		<class>com.knowledgehut.crm.entities.Country</class>
 		<!-- Jboss recognizes only the entities listed here -->
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 

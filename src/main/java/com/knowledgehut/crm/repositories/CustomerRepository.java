@@ -13,7 +13,7 @@ import com.knowledgehut.crm.entities.UserEntity;
 
 @Repository
 @Scope("singleton")
-public interface CustomerRepository extends JpaRepository<UserCourse, Long>, JpaSpecificationExecutor<UserCourse> {
+public interface CustomerRepository extends JpaRepository<Customer, Long>, JpaSpecificationExecutor<Customer> {
 
  
 }

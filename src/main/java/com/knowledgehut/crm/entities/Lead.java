@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.hibernate.annotations.Type;
 
 @Entity
@@ -124,5 +125,9 @@ public class Lead extends AuditableIdEntity {
   }
 
 
-
+@Override
+public String toString() {
+return ReflectionToStringBuilder.toString(this);
+}
+  
 }

@@ -52,6 +52,26 @@
 							required="true" requiredMessage="Description is required"
 							id="description" rendered="true" name="description" />
 
+						<h:outputLabel value="Course" />
+						<p:selectOneMenu id="courseId"
+							value="#{leadController.leadBean.courseId}" required="true"
+							requiredMessage="Course is required">
+							<f:selectItems
+								value="#{leadController.getCourseList()}"
+								var="course" itemLabel="#{course.name}"
+								itemValue="#{course.id}" />
+						</p:selectOneMenu>
+						
+						<h:outputLabel value="Country" />
+						<p:selectOneMenu id="countryId"
+							value="#{leadController.leadBean.countryId}" required="true"
+							requiredMessage="Country is required">
+							<f:selectItems
+								value="#{leadController.getCountryList()}"
+								var="country" itemLabel="#{country.name}"
+								itemValue="#{country.id}" />
+						</p:selectOneMenu>
+						
 						<h:outputLabel value="Lead Group" />
 						<p:selectOneMenu id="leadGroupId"
 							value="#{leadController.leadBean.leadGroupId}" required="true"
