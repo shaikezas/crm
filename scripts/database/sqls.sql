@@ -6,8 +6,13 @@ insert into `ROLES` (`ID`, `ROLE_NAME`, `ROLE_DESC`, `IS_ACTIVE`, `DELETED`, `CR
 insert into `ROLES` (`ID`, `ROLE_NAME`, `ROLE_DESC`, `IS_ACTIVE`, `DELETED`, `CREATEDBY`, `MODIFIEDBY`, `CREATED_DATE`, `MODIFIED_DATE`) values('3','crm_manager','CRM Category Manager','1','0','0','0',NOW(),'2014-05-10 12:12:01');
 insert into `ROLES` (`ID`, `ROLE_NAME`, `ROLE_DESC`, `IS_ACTIVE`, `DELETED`, `CREATEDBY`, `MODIFIEDBY`, `CREATED_DATE`, `MODIFIED_DATE`) values('4','crm_executive','CRM Excecutive','1','0','0','0',NOW(),'2014-05-10 12:12:16');
 
-insert into `user_roles` (`USER_ID`, `ROLE_ID`, `IS_ACTIVE`, `DELETED`, `CREATEDBY`, `MODIFIEDBY`, `CREATED_DATE`, `MODIFIED_DATE`) values('1','1','1','0','0','0','2014-05-10 12:08:41','0000-00-00 00:00:00');
-
+insert into `user_roles` (`USER_ID`, `ROLE_ID`, `ACTIVE`, `DELETED`, `CREATEDBY`, `MODIFIEDBY`, `CREATED_DATE`, `MODIFIED_DATE`) values('1','1','1','0','0','0','2014-05-10 12:08:41','0000-00-00 00:00:00');
+insert into `user_roles` (`USER_ID`, `ROLE_ID`, `ACTIVE`, `DELETED`, `CREATEDBY`, `MODIFIEDBY`, `CREATED_DATE`, `MODIFIED_DATE`) 
+values('1','2','1','0','0','0','2014-05-10 12:08:41','0000-00-00 00:00:00');
+insert into `user_roles` (`USER_ID`, `ROLE_ID`, `ACTIVE`, `DELETED`, `CREATEDBY`, `MODIFIEDBY`, `CREATED_DATE`, `MODIFIED_DATE`) 
+values('1','3','1','0','0','0','2014-05-10 12:08:41','0000-00-00 00:00:00');
+insert into `user_roles` (`USER_ID`, `ROLE_ID`, `ACTIVE`, `DELETED`, `CREATEDBY`, `MODIFIEDBY`, `CREATED_DATE`, `MODIFIED_DATE`) 
+values('1','4','1','0','0','0','2014-05-10 12:08:41','0000-00-00 00:00:00');
 
 
 insert into `LEAD_TYPE` (`ID`, `LEAD_TYPE`, `DESCRIPTION`, `GROUP_ID`, `ACTIVE`, `CREATEDBY`, `MODIFIED_BY`, `CREATED_DATE`, `MODIFIED_DATE`) values('1','Product Related','Product Related',NULL,'1','0','0',NOW(),NOW());
